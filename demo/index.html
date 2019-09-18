@@ -1,0 +1,49 @@
+<!-- index.html -->
+<html>
+  <body>
+    <fieldset>
+      <legend>Encrypt a File:</legend>
+      <input id="encryptFileInput" type="file" />
+      <input id="encryptFilePassword" type="password" placeholder="Passphrase" />
+      <button id="encryptFileAction">Encrypt</button>
+      <textarea
+        id="encryptFileOutput"
+        placeholder="Serialized encrypted file contents will output here"
+      ></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Decrypt a File:</legend>
+      <textarea id="decryptFileInput" placeholder="Serialized encrypted file contents"></textarea>
+      <input id="decryptFilePassword" type="password" placeholder="Passphrase" />
+      <button id="decryptFileAction">Decrypt and Output</button>
+      <button id="downloadDecrypted">Download Decrypted</button>
+      <textarea
+        id="decryptFileOutput"
+        placeholder="Decrypted file contents will output here"
+      ></textarea>
+      <img id="imgOutput" />
+    </fieldset>
+
+    <fieldset>
+      <legend>Encrypt some text:</legend>
+      <textarea id="encryptTextInput" placeholder="Text to encrypt"></textarea>
+      <input id="encryptTextPassword" type="password" placeholder="Passphrase" />
+      <button id="encryptTextAction">Encrypt</button>
+      <textarea
+        id="encryptTextOutput"
+        placeholder="Serialized encrypted will output here"
+      ></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Decrypt some text:</legend>
+      <textarea id="decryptTextInput" placeholder="Serialized encrypted"></textarea>
+      <input id="decryptTextPassword" type="password" placeholder="Passphrase" />
+      <button id="decryptTextAction">Decrypt</button>
+      <textarea id="decryptTextOutput" placeholder="Decrypted text will output here"></textarea>
+    </fieldset>
+
+    <script src="./index.ts"></script>
+  </body>
+</html>
