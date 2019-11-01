@@ -1,6 +1,6 @@
 {
   "name": "@meeco/cryppo",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "In-browser encryption and decryption. Clone of Ruby Cryppo",
   "scripts": {
     "browser": "karma start",
