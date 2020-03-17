@@ -2,7 +2,8 @@ import { md, pkcs5, random } from 'node-forge';
 import {
   binaryBufferToString,
   deSerializeDerivedKeyOptions,
-  serializeDerivedKeyOptions
+  serializeDerivedKeyOptions,
+  stringAsBinaryBuffer
 } from '../util';
 
 /**
@@ -104,7 +105,7 @@ export class DerivedKeyOptions implements IDerivedKey {
   public serialize(): string {
     // keys taken from ruby lib
     return serializeDerivedKeyOptions(this.strategy, {
-      iv: this.salt,
+      iv: stringAsBinaryBuffer(this.salt), // ensures proper yaml serialization
       i: this.iterations,
       l: this.length,
       hash: this.hash

@@ -1,19 +1,20 @@
 import { pki } from 'node-forge';
-import { deSerialize } from '../util';
+import { deSerialize, keyLengthFromPublicKeyPem, serialize } from '../util';
 
 export function generateRSAKeyPair(
   bits = 4096
-): Promise<{ privateKey: string; publicKey: string }> {
+): Promise<{ privateKey: string; publicKey: string; bits: number }> {
   return new Promise((resolve, reject) => {
     // -1 workers to estimate number of cores available
     // https://github.com/digitalbazaar/forge#rsa
-    pki.rsa.generateKeyPair({ bits, workers: -1 }, (err, keyPair) => {
+    pki.rsa.generateKeyPair({ bits, workers: 0 }, (err, keyPair) => {
       if (err) {
         return reject(err);
       }
       resolve({
         privateKey: pki.privateKeyToPem(keyPair.privateKey),
-        publicKey: pki.publicKeyToPem(keyPair.publicKey)
+        publicKey: pki.publicKeyToPem(keyPair.publicKey),
+        bits
       });
     });
   });
@@ -37,10 +38,17 @@ export async function encryptWithPublicKey({
 }: {
   publicKeyPem: string;
   data: string;
-  scheme?: 'RSAES-PKCS1-V1_5' | 'RSA-OAEP' | 'RAW' | 'NONE' | null | undefined;
+  scheme?: RsaEncryptionScheme;
 }) {
   const pk = pki.publicKeyFromPem(publicKeyPem) as pki.rsa.PublicKey;
-  return pk.encrypt(data, scheme);
+  const encrypted = pk.encrypt(data, scheme);
+
+  const bitLength = keyLengthFromPublicKeyPem(publicKeyPem);
+  const serialized = serialize(`Rsa${bitLength}`, encrypted, <any>{});
+  return {
+    encrypted,
+    serialized
+  };
 }
 
 export type RsaEncryptionScheme =
@@ -71,6 +79,9 @@ export async function decryptSerializedWithPrivateKey({
   });
 }
 
+/**
+ * @deprecated
+ */
 export async function decryptWithPrivateKey({
   password,
   privateKeyPem,

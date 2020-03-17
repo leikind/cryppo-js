@@ -101,10 +101,11 @@ describe('RSA Keypair Generation', () => {
 
   it('decrypts data with private keys that do not have passwords', async done => {
     try {
-      const encrypted = await encryptWithPublicKey({
+      const result = await encryptWithPublicKey({
         publicKeyPem: PUBLIC_KEY,
         data: SECRET
       });
+      const { encrypted } = result;
       const decrypted = await decryptWithPrivateKey({
         encrypted,
         privateKeyPem: PRIVATE_KEY
@@ -123,10 +124,11 @@ describe('RSA Keypair Generation', () => {
         privateKeyPem: PRIVATE_KEY,
         password
       });
-      const encrypted = await encryptWithPublicKey({
+      const result = await encryptWithPublicKey({
         publicKeyPem: PUBLIC_KEY,
         data: SECRET
       });
+      const { encrypted } = result;
       const decrypted = await decryptWithPrivateKey({
         encrypted,
         password,

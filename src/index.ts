@@ -6,9 +6,13 @@ export * from './key-derivation/derived-key';
 export * from './key-derivation/pbkdf2-hmac';
 export * from './key-pairs/rsa';
 export * from './strategies';
+export * from './signing/rsa-signature';
+
 export {
   decodeDerivationArtifacts,
   encodeDerivationArtifacts,
   generateEncryptionVerificationArtifacts,
-  generateRandomKey
+  generateRandomKey,
+  encodeSafe64,
+  decodeSafe64
 } from './util';
