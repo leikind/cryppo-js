@@ -1,4 +1,4 @@
-import { random, util } from 'node-forge';
+import { pki, random, util } from 'node-forge';
 import * as YAML from 'yaml';
 import { IEncryptionArtifacts } from './encryption/encryption';
 import { ICryppoSerializationArtifacts, IDerivedKey } from './key-derivation/derived-key';
@@ -99,7 +99,7 @@ function decodeArtifactData(text: string) {
   return YAML.parse(text.replace(/ !binary/g, ' !!binary'));
 }
 
-export function stringAsBinaryBuffer(val: string): ArrayLike<any> {
+export function stringAsBinaryBuffer(val: string): Uint8Array {
   if (typeof Buffer !== 'undefined') {
     return Buffer.from(val, 'binary');
   }
@@ -156,4 +156,22 @@ export function generateEncryptionVerificationArtifacts() {
     token: encodeSafe64(token),
     salt: encodeSafe64(salt)
   };
+}
+
+export function keyLengthFromPublicKeyPem(publicKeyPem: string) {
+  const pk = pki.publicKeyFromPem(publicKeyPem) as pki.rsa.PublicKey;
+  // Undocumented functionality but was the only way I could find to get
+  // key length out of the public key.
+  // https://github.com/digitalbazaar/forge/blob/master/lib/rsa.js#L1244
+  const bitLength = (pk.n as any).bitLength();
+  return bitLength;
+}
+
+export function keyLengthFromPrivateKeyPem(privateKey: string) {
+  const pk = pki.privateKeyFromPem(privateKey) as pki.rsa.PrivateKey;
+  // Undocumented functionality but was the only way I could find to get
+  // key length out of the public key.
+  // https://github.com/digitalbazaar/forge/blob/master/lib/rsa.js#L1244
+  const bitLength = (pk.n as any).bitLength();
+  return bitLength;
 }

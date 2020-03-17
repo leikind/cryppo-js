@@ -1,10 +1,10 @@
 {
   "name": "@meeco/cryppo",
-  "version": "0.0.13",
+  "version": "0.3.3",
   "description": "In-browser encryption and decryption. Clone of Ruby Cryppo",
   "scripts": {
     "browser": "karma start",
-    "build": "microbundle",
+    "build": "rm -rf dist && tsc && bili src/index.ts --format cjs --format es --module-name cryppo",
     "demo": "npm start",
     "lint": "tslint --project tsconfig.json",
     "prebuild": "npm run lint",
@@ -15,8 +15,7 @@
   },
   "source": "src/index.ts",
   "main": "dist/index.js",
-  "umd:main": "dist/index.umd.js",
-  "module": "dist/index.m.js",
+  "module": "dist/index.esm.js",
   "types": "dist/src/index.d.ts",
   "repository": {
     "type": "git",
@@ -41,6 +40,7 @@
     "@types/jest": "^24.0.15",
     "@types/node-forge": "0.8.4",
     "@types/yaml": "^1.0.2",
+    "bili": "^4.8.1",
     "jasmine-core": "^3.4.0",
     "jest": "^24.8.0",
     "jest-junit": "^6.4.0",
@@ -54,7 +54,6 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-safari-launcher": "^1.0.0",
     "karma-typescript": "^4.1.0",
-    "microbundle": "^0.11.0",
     "parcel-bundler": "^1.12.3",
     "sass": "^1.22.2",
     "ts-jest": "^24.0.2",
