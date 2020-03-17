@@ -19,7 +19,7 @@
   "types": "dist/src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket-nf:meeco/cryppo-js.git"
+    "url": "git@github.com:Meeco/cryppo-js.git"
   },
   "keywords": [
     "encryption",
